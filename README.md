@@ -146,6 +146,7 @@ if number >= 100 {
 } else {
     println!("Inférieur à 100 !");
 }
+```
 ### match
 match correspand à le commutateur switch aux autres languages comme en C.
 
@@ -204,7 +205,7 @@ while(i<3) {
             println!("Language Rust ");
             i += 1;
 }
-
+```
 ## Propiétaire (Ownership)
 
 La propriétaire est une caractéristique centrale de Rust et parmit l'un de ses points forts. Un système de propriété gère la mémoire avec un ensemble de règles que le compilateur vérifie au moment de la compilation.
@@ -234,6 +235,7 @@ Slice est un pointeur sur un bloc de mémoire. Les slices peuvent être utilisé
 Les slices sont des pointeurs vers les données réelles.La taille d'une slice est déterminée lors de l'exécution.
 
 Par exemple, des slices peuvent être utilisées pour récupérer une partie d'une valeur d'une chaîne de caractères. Par conséquent, nous devons spécifier l'indice de début et de fin d'une chaîne.
+
 ```markdown 
 let array: [i32;4] = [5, 8, 1, 4];
 
