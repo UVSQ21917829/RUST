@@ -3,11 +3,7 @@
 Rust est un nouveau langage de programmation open source créé par Mozilla et une communauté de volontaires, conçu pour aider les développeurs à concevoir des applications ultra-rapides et sécurisées qui utilisent avantageusement les puissantes fonctionnalités offertes par les processeurs multi-cœurs modernes. Il permet d'éviter les erreurs de segmentation et assure la sécurité des threads, le tout avec une syntaxe facile à assimiler.
 # Mise en place des outils
 Pour pouvoir développer en Rust, il va déjà falloir les bons outils. 
-1-L'éditeur de code Rust en ligne :
-```markdown
-![alt text](/home/hajar/Bureau/play-rust.png)
-```
-
+1-L'éditeur de code Rust en ligne 
 2-Soit http://www.tutorialspoint.com/compile_rust_online.php
 qui permet d'éditer, compiler et exécuter des projets complets (répartis sur plusieurs fichiers) tout en proposant des outils d'import et d'export.
 3-Soit un IDE. Par-exemple visual studio.
