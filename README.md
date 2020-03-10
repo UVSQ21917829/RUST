@@ -345,3 +345,23 @@ Une demande de journal se compose d'une cible, d'un niveau et d'un corps. Une ci
 Une macro pour déclarer la statique évaluée paresseusement dans Rust.
 
 En utilisant cette macro, il est possible d'avoir des statiques qui nécessitent que le code soit exécuté au moment de l'exécution pour être initialisé. Cela inclut tout ce qui nécessite des allocations de tas, comme les vecteurs ou les mappages de hachage, ainsi que tout ce qui nécessite le calcul d'appels de fonction non const.
+
+### Webographie
+
+https://crates.io/crates/syn
+
+https://doc.rust-lang.org/rust-by-example/crates/link.html
+
+https://doc.rust-lang.org/std/keyword.enum.html
+
+https://doc.rust-lang.org/1.30.0/book/first-edition/generics.html#generics
+
+https://doc.rust-lang.org/std/
+
+https://doc.rust-lang.org/1.0.0/book/crates-and-modules.html
+
+https://blog.guillaume-gomez.fr/Rust/1/2
+
+https://github.com/rust-lang/book
+
+https://devdocs.io/rust/
