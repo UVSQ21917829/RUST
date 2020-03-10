@@ -242,5 +242,40 @@ let array: [i32;4] = [5, 8, 1, 4];
 let tranche = &array[1..2]; // tranche contient [8,1]
 
 ```
+## Vecteurs
+Un «vecteur» est un tableau dynamique ou «évolutif», implémenté comme le type de bibliothèque standard Vec <T>. Le T signifie que nous pouvons avoir des vecteurs de tout type. Les vecteurs allouent toujours leurs données sur le tas. 
+Les vecteurs stockent leur contenu sous forme de tableaux contigus de T sur le tas. Cela signifie qu'ils doivent être capables de connaître la taille de T au moment de la compilation . La taille de certaines choses ne peut pas être connue au moment de la compilation.
+Exemple :
+
+```markdown 
+let v = vec![1, 2, 3, 4, 5];
+
+```  
+## Enums
+Une énumération dans Rust est un type qui représente des données qui sont l'une des nombreuses variantes possibles. Chaque variante de l'énumération peut éventuellement avoir des données associées:
+exemple :
+```markdown 
+enum Location {
+    Unknown,
+    Anonymous,
+    Known(Coord),
+}
 
 
+```
+## Strucs
+Les structures sont un moyen de créer des types de données plus complexes. 
+Exemple :
+```markdown 
+struct Point {
+    x: i32,
+    y: i32,
+}
+
+fn main() {
+    let origin = Point { x: 0, y: 0 }; // origin: Point
+
+    println!("l'origine est ({}, {})", origin.x, origin.y);
+}
+
+```
