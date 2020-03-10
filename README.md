@@ -279,3 +279,57 @@ fn main() {
 }
 
 ```
+# Bibliotheques
+## Crates 
+Les caisses sont un peu similaires aux packages dans certaines autres langues. Les caisses se compilent individuellement. Si la caisse a des modules de fichiers enfants, ces fichiers seront fusionnés avec le fichier de caisse et compilés en une seule unité.
+
+ Une caisse peut produire un exécutable / un binaire ou une bibliothèque. src / main.rs est la racine de la caisse / le point d'entrée pour une caisse binaire et src / lib.rs est le point d'entrée pour une caisse de bibliothèque.
+ Ici nous utilisons des exemples les plus simples de quelques bibliothèque tierces :
+## Rand
+Une bibliothèque Rust pour la génération de nombres aléatoires.
+Rand fournit des utilitaires pour générer des nombres aléatoires, pour les convertir en types et distributions utiles, et certains algorithmes liés à l'aléatoire.
+Les principaux traits de génération de nombres aléatoires de Rand vivent dans la caisse rand_core , Les implémentations RNG devraient préférer utiliser rand_core tandis que la plupart des autres utilisateurs devraient dépendre de rand.
+## bitflags
+Un générateur d'indicateurs de masque de bits de typeafe utile pour les ensembles d'indicateurs de masques de bits de style C. Il peut être utilisé pour créer des wrappers de typeafe autour des API C.
+Les bitflags! macro génère une structure qui gère un ensemble d'indicateurs. Les indicateurs ne doivent être définis que pour les types entiers, sinon des erreurs de type inattendues peuvent se produire au moment de la compilation.
+
+## rand_core
+Traits de base et types d'erreur de la bibliothèque rand, ainsi que des outils pour implémenter les RNG.
+
+Cette caisse est destinée à être utilisée lors de la mise en œuvre du trait principal, RngCore; il définit les traits de base à implémenter ainsi que plusieurs petites fonctions pour faciliter leur implémentation et les types requis pour la gestion des erreurs.
+
+La caisse principale rand réexporte la plupart des éléments définis dans cette caisse, ainsi que des outils pour convertir les échantillons entiers générés par RngCore dans de nombreuses applications différentes (y compris l'échantillonnage à partir de plages restreintes, la conversion en virgule flottante, les permutations de liste et l'initialisation sécurisée des RNG). La plupart des utilisateurs devraient préférer utiliser la caisse principale du rand.
+
+## unicode_xid
+Déterminez si un caractère est un identifiant valide pour un analyseur et / ou un lexeur conformément aux règles de l'Annexe 31 de la norme Unicode.
+Exemple d'utilisation :
+```markdown 
+extern crate unicode_xid;
+
+use unicode_xid::UnicodeXID;
+
+fn main() {
+    let ch = 'a';
+    println!("Is {} a valid start of an identifier? {}", ch, UnicodeXID::is_xid_start(ch));
+}
+
+```
+## Serde
+Serde est un framework  pour la sérialisation et la désérialisation des structures de données Rust de manière efficace et générique.
+## Rust Quasi-Quoting
+Cette caisse fournit la citation! macro pour transformer les structures de données de l'arbre de syntaxe Rust en jetons de code source.
+
+Les macros procédurales dans Rust reçoivent un flux de jetons en entrée, exécutent du code Rust arbitraire pour déterminer comment manipuler ces jetons et produisent un flux de jetons à remettre au compilateur pour le compiler dans la caisse de l'appelant. La quasi-citation est une solution à une partie de cela - la production de jetons à retourner au compilateur.
+
+Cette caisse est motivée par le cas d'utilisation des macros procédurales, mais est une bibliothèque à usage général de quasi-cotation Rust et n'est pas spécifique aux macros procédurales.
+
+## log
+La caisse à journaux fournit une API de journalisation unique qui résume la mise en œuvre réelle de la journalisation. Les bibliothèques peuvent utiliser l'API de journalisation fournie par cette caisse, et le consommateur de ces bibliothèques peut choisir l'implémentation de journalisation qui convient le mieux à son cas d'utilisation.
+
+Si aucune implémentation de journalisation n'est sélectionnée, la façade revient à une implémentation "noop" qui ignore tous les messages de journal. La surcharge dans ce cas est très petite - juste une charge entière, une comparaison et un saut.
+
+Une demande de journal se compose d'une cible, d'un niveau et d'un corps. Une cible est une chaîne qui prend par défaut le chemin du module de l'emplacement de la demande de journal, bien que cette valeur par défaut puisse être remplacée. Les implémentations de l'enregistreur utilisent généralement la cible pour filtrer les demandes en fonction d'une configuration utilisateur.
+## lazy-static.rs
+Une macro pour déclarer la statique évaluée paresseusement dans Rust.
+
+En utilisant cette macro, il est possible d'avoir des statiques qui nécessitent que le code soit exécuté au moment de l'exécution pour être initialisé. Cela inclut tout ce qui nécessite des allocations de tas, comme les vecteurs ou les mappages de hachage, ainsi que tout ce qui nécessite le calcul d'appels de fonction non const.
