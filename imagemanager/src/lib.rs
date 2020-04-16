@@ -1,5 +1,6 @@
 
 
+
 #![crate_type = "lib"]
 use std::path::Path;
 
@@ -60,6 +61,19 @@ impl MetadataImage{
            }
         }     
         return latitude;
+    }
+    //recuper gpsinfo: Altitude
+    pub fn get_gps_altitude(&self)-> f64{
+        let mut altitude =0.0_f64;
+        if let  meta = rexiv2::Metadata::new_from_path(&self.image ).unwrap() {
+           if let Some(gps)=meta.get_gps_info(){
+            altitude=gps.altitude;
+           }
+           else{
+            altitude=0.0;
+           }
+        }     
+        return altitude;
     }
     
 }
