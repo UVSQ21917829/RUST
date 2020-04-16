@@ -42,11 +42,24 @@ impl MetadataImage{
            longitude=gps.longitude;
            }
            else{
-            longitude=1.0;
+            longitude=0.0;
            }
         }     
     
         return longitude;
+    }
+    //recuper gpsinfo: Latitude
+    pub fn get_gps_latitude(&self)-> f64{
+        let mut latitude =0.0_f64;
+        if let  meta = rexiv2::Metadata::new_from_path(&self.image ).unwrap() {
+           if let Some(gps)=meta.get_gps_info(){
+            latitude=gps.latitude;
+           }
+           else{
+            latitude=0.0;
+           }
+        }     
+        return latitude;
     }
     
 }
