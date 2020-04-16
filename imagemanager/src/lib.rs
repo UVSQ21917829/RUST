@@ -21,7 +21,18 @@ impl MetadataImage{
     pub fn new(s: &str)->MetadataImage{
  
         return MetadataImage { image: s.to_string() }
-
+    }
+    //La fonction qui permet de récuperer la date et le temps de créer l'image
+    pub fn get_image_date_time(&self)-> String{
+        let mut date = String::new();
+        if let  Ok(meta) = rexiv2::Metadata::new_from_path(&self.name ) {
+            if let Ok(time) = meta.get_tag_string("Exif.Image.DateTime") {
+                date=time;
+            }else{
+                date="".to_string();
+            }
+        }
+        return date;
     }
     
 }
