@@ -35,15 +35,17 @@ impl MetadataImage{
         return date;
     }
     //recuper gpsinfo: longitude
-    pub fn get_gps_longitude(&self)-> String{
-        let mut longitude = String::new();
-        if let  Ok(meta) = rexiv2::Metadata::new_from_path(&self.image ) {
-            if let Ok(longps) = meta.get_tag_string("Exif.GPSInfo.GPSLongitude") {
-            longitude=longps;
-            }else{
-                longitude="".to_string();
-            }
-        }
+    pub fn get_gps_longitude(&self)-> f64{
+        let mut longitude =0.0_f64;
+        if let  meta = rexiv2::Metadata::new_from_path(&self.image ).unwrap() {
+           if let Some(gps)=meta.get_gps_info(){
+           longitude=gps.longitude;
+           }
+           else{
+            longitude=1.0;
+           }
+        }     
+    
         return longitude;
     }
     

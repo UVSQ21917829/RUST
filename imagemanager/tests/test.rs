@@ -1,4 +1,5 @@
 
+
 extern crate imagemanager;
 
 #[cfg(test)]
@@ -11,8 +12,14 @@ mod tests {
     }
     #[test]
     fn test_date() {
-        let path = "info.JPG";
+        let path = "images/info.JPG";
         let meta = imagemanager::image::MetadataImage::new(&path);
         assert_eq!(meta.get_image_date_time(), "2017:05:10 10:30:25");
+    }
+    #[test]
+    fn test_gps_longitude() {
+        let path = "images/info.JPG";
+        let meta = imagemanager::image::MetadataImage::new(&path);
+        assert_eq!(meta.get_gps_longitude(), 2.1487555555555553);
     }
 } 
