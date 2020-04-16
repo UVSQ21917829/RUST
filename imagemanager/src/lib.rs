@@ -25,7 +25,7 @@ impl MetadataImage{
     //La fonction qui permet de récuperer la date et le temps de créer l'image
     pub fn get_image_date_time(&self)-> String{
         let mut date = String::new();
-        if let  Ok(meta) = rexiv2::Metadata::new_from_path(&self.name ) {
+        if let  Ok(meta) = rexiv2::Metadata::new_from_path(&self.image ) {
             if let Ok(time) = meta.get_tag_string("Exif.Image.DateTime") {
                 date=time;
             }else{
@@ -33,6 +33,18 @@ impl MetadataImage{
             }
         }
         return date;
+    }
+    //recuper gpsinfo: longitude
+    pub fn get_gps_longitude(&self)-> String{
+        let mut longitude = String::new();
+        if let  Ok(meta) = rexiv2::Metadata::new_from_path(&self.image ) {
+            if let Ok(longps) = meta.get_tag_string("Exif.GPSInfo.GPSLongitude") {
+            longitude=longps;
+            }else{
+                longitude="".to_string();
+            }
+        }
+        return longitude;
     }
     
 }
