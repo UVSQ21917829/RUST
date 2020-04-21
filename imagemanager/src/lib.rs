@@ -99,5 +99,19 @@ impl MetadataImage{
            }
 }  return supports_iptc;
  }
+ //Déterminez si le type de fichier chargé prend en charge les métadonnées XMP.
+ pub fn supports_xmp_fn(&self) -> bool{
+let mut supports_xmp=true;
+  if let  meta = rexiv2::Metadata::new_from_path(&self.image ).unwrap() {
+   if meta.supports_xmp()==true {
+           return supports_xmp;
+       }else{
+            supports_xmp=false;
+           }
+}  return supports_xmp;
+ }
+
+
+ 
 }
 }
