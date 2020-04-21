@@ -110,8 +110,19 @@ let mut supports_xmp=true;
            }
 }  return supports_xmp;
  }
+  //Indique si le fichier chargé contient des métadonnées Exif.
+ pub fn has_exif_fn(&self) -> bool{
+let mut exif=true;
+  if let  meta = rexiv2::Metadata::new_from_path(&self.image ).unwrap() {
+   if meta.has_exif()==true {
+           return exif;
+       }else{
+            exif=false;
+           }
+}  return exif;
+ }
 
 
- 
+
 }
 }
