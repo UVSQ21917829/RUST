@@ -39,4 +39,10 @@ mod tests {
         let meta = imagemanager::image::MetadataImage::new(&path);
         assert_eq!(meta.supports_exif_fn(),true );
     }
+      #[test]
+    fn test_supports_iptc_fn() {
+        let path = "images/info.JPG";
+        let meta = imagemanager::image::MetadataImage::new(&path);
+        assert_eq!(meta.supports_iptc_fn(),true );
+    }
 } 

@@ -89,7 +89,7 @@ impl MetadataImage{
  }
 
  //Déterminez si le type de fichier chargé prend en charge les métadonnées IPTC.
- pub fn supports_iptc_fn(&self) -> bool{
+ pub fn supports_exif_fn(&self) -> bool{
   let mut supports_iptc=true;
   if let  meta = rexiv2::Metadata::new_from_path(&self.image ).unwrap() {
    if meta.supports_iptc()==true {
