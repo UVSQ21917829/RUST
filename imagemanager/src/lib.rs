@@ -87,5 +87,17 @@ impl MetadataImage{
            }
 }  return supports_iptc;
  }
+
+ //Déterminez si le type de fichier chargé prend en charge les métadonnées IPTC.
+ pub fn supports_iptc_fn(&self) -> bool{
+  let mut supports_iptc=true;
+  if let  meta = rexiv2::Metadata::new_from_path(&self.image ).unwrap() {
+   if meta.supports_iptc()==true {
+           return supports_iptc;
+       }else{
+            supports_iptc=false;
+           }
+}  return supports_iptc;
+ }
 }
 }
