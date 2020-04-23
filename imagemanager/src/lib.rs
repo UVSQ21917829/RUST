@@ -170,4 +170,10 @@ let mut iptc=true;
   meta.clear_iptc();
   return true;
  }
+  //Supprime toutes les métadonnées XMP.
+ pub fn clear_xmp_fn(&self)-> bool{
+  let  meta = rexiv2::Metadata::new_from_path(&self.image ).unwrap() ;
+  meta.clear_xmp();
+  return true;
+ }
 }
