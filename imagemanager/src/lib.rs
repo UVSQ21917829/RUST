@@ -132,7 +132,17 @@ let mut xmp=true;
            }
 }  return xmp;
  }
-
+ //Indique si le fichier chargé contient des métadonnées IPTC.
+ pub fn has_iptc_fn(&self) -> bool{
+let mut iptc=true;
+  if let  meta = rexiv2::Metadata::new_from_path(&self.image ).unwrap() {
+   if meta.has_iptc()==true {
+           return iptc;
+       }else{
+            iptc=false;
+           }
+}  return iptc;
+ }
 
 }
 }
