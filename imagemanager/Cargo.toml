@@ -1,0 +1,22 @@
+[package]
+name = "imagemanager"
+version = "0.1.0"
+authors = ["UVSQ21917829 & UVSQ21807248"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+include = [
+  "Cargo.toml",
+
+  "src/**/*",
+]
+[dependencies]
+rexiv2="0.9.0"
+
+[[test]]
+name = "tests"
+path = "tests/test.rs"
+
+[lib]
+name = "imagemanager"  
