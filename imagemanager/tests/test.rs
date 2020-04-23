@@ -81,7 +81,7 @@ mod tests {
         let meta = imagemanager::image::MetadataImage::new(&path);
         assert_eq!(meta.get_pixel_height_img(),2448 );
     }
-    
+
       #[test]
     fn test_clear_iptc_fn() {
         let path = "images/img2.jpg";
@@ -90,6 +90,26 @@ mod tests {
             println!("les métadonnées IPTC sont supprimées");
         } else {
             println!("les métadonnées IPTC ne sont pas supprimées");
+        }
+
+    }  #[test]
+    fn test_clear_exif_fn() {
+        let path = "images/img2.jpg";
+        let meta = imagemanager::image::MetadataImage::new(&path);
+       if meta.clear_exif_fn()==true {
+            println!("les métadonnées Exif sont supprimées");
+        } else {
+            println!("les métadonnées Exif ne sont pas supprimées");
+        }
+    }
+      #[test]
+        fn test_clear_xmp_fn() {
+        let path = "images/img2.jpg";
+        let meta = imagemanager::image::MetadataImage::new(&path);
+       if meta.clear_xmp_fn()==true {
+            println!("les métadonnées XMP sont supprimées");
+        } else {
+            println!("les métadonnées XMP ne sont pas supprimées");
         }
 
     }
