@@ -158,4 +158,10 @@ let mut iptc=true;
            return pix_h;
             
  }
+  //Supprime toutes les métadonnées Exif.
+ pub fn clear_exif_fn(&self)-> bool{
+  let  meta = rexiv2::Metadata::new_from_path(&self.image ).unwrap() ;
+  meta.clear_exif();
+  return true;
+ }
 }
