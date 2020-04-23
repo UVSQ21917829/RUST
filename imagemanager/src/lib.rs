@@ -151,4 +151,11 @@ let mut iptc=true;
             return pix_w;
         }
 }
+ //Obtenez la hauteur réelle de pixels non pivotés / non orientés de l'image chargée.
+ pub fn get_pixel_height_img(&self) -> i32{
+         let  meta = rexiv2::Metadata::new_from_path(&self.image ).unwrap() ;
+            let  pix_h  = meta.get_pixel_height() ;
+           return pix_h;
+            
+ }
 }
