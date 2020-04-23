@@ -57,4 +57,10 @@ mod tests {
         let meta = imagemanager::image::MetadataImage::new(&path);
         assert_eq!(meta.has_exif_fn(),true );
     }
+        #[test]
+    fn test_has_xmp_fn() {
+        let path = "images/info.JPG";
+        let meta = imagemanager::image::MetadataImage::new(&path);
+        assert_eq!(meta.has_xmp_fn(),false );
+    }
 } 
