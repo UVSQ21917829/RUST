@@ -81,4 +81,14 @@ mod tests {
         let meta = imagemanager::image::MetadataImage::new(&path);
         assert_eq!(meta.get_pixel_height_img(),2448 );
     }
+       #[test]
+    fn test_clear_exif_fn() {
+        let path = "images/img2.jpg";
+        let meta = imagemanager::image::MetadataImage::new(&path);
+       if meta.clear_exif_fn()==true {
+            println!("les métadonnées Exif sont supprimées");
+        } else {
+            println!("les métadonnées Exif ne sont pas supprimées");
+        }
+    }
 } 
