@@ -69,4 +69,10 @@ mod tests {
         let meta = imagemanager::image::MetadataImage::new(&path);
         assert_eq!(meta.has_iptc_fn(),false );
     }
+      #[test]
+    fn test_get_pixel_width_img() {
+        let path = "images/info.JPG";
+        let meta = imagemanager::image::MetadataImage::new(&path);
+        assert_eq!(meta.get_pixel_width_img(),3264 );
+    }
 } 
