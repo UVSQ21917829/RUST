@@ -143,6 +143,12 @@ let mut iptc=true;
            }
 }  return iptc;
  }
-
+//Obtenez la largeur réelle de pixels non pivotés / non orientés de l'image chargée.
+ pub fn get_pixel_width_img(&self) -> i32{
+          
+         let  meta = rexiv2::Metadata::new_from_path(&self.image ).unwrap() ;
+            let  pix_w  = meta.get_pixel_width() ;
+            return pix_w;
+        }
 }
 }
