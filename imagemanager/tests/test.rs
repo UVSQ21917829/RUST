@@ -33,6 +33,12 @@ mod tests {
         let meta = imagemanager::image::MetadataImage::new(&path);
         assert_eq!(meta.get_gps_altitude(), 131.28054298642533);
     }
+    #[test]
+    fn test_image_type() {
+        let _path = "images/info.JPG";
+        let meta = imagemanager::image::MetadataImage::new(&_path);
+        assert_eq!(meta.get_image_type(), "image/jpeg");
+    }
       #[test]
       fn test_supports_exif_fn() {
         let path = "images/info.JPG";
