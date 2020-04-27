@@ -33,4 +33,28 @@ mod tests {
         let meta = imagemanager::image::MetadataImage::new(&path);
         assert_eq!(meta.get_gps_altitude(), 131.28054298642533);
     }
+      #[test]
+      fn test_supports_exif_fn() {
+        let path = "images/info.JPG";
+        let meta = imagemanager::image::MetadataImage::new(&path);
+        assert_eq!(meta.supports_exif_fn(),true );
+    }
+      #[test]
+    fn test_supports_iptc_fn() {
+        let path = "images/info.JPG";
+        let meta = imagemanager::image::MetadataImage::new(&path);
+        assert_eq!(meta.supports_iptc_fn(),true );
+    }
+        #[test]
+    fn test_supports_xmp_fn() {
+        let path = "images/info.JPG";
+        let meta = imagemanager::image::MetadataImage::new(&path);
+        assert_eq!(meta.supports_xmp_fn(),true );
+    }
+        #[test]
+      fn test_has_exif_fn() {
+        let path = "images/info.JPG";
+        let meta = imagemanager::image::MetadataImage::new(&path);
+        assert_eq!(meta.has_exif_fn(),true );
+    }
 } 
