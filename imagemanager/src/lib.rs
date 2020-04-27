@@ -104,6 +104,33 @@ impl MetadataImage{
     
         return gps;
     }
+    //récuperer les résolution de l'image
+    pub fn get_image_resolution(&self)-> Resolution{
+        let mut resolution = Resolution{x:"".to_string(),
+         y:"".to_string(),unit:"".to_string(),};
+        if let  Ok(meta) = rexiv2::Metadata::new_from_path(&self.image ) {
+            //La résolution X
+            if let Ok(resx) = meta.get_tag_string("Exif.Image.XResolution") {
+                resolution.x=resx;
+            }else{
+                resolution.x="".to_string();
+            }
+            // La résolution Y
+            if let Ok(resy) = meta.get_tag_string("Exif.Image.YResolution") {
+                resolution.y=resy;
+            }else{
+                resolution.y="".to_string();
+            }
+            // La résolution Unit
+            if let Ok(resu) = meta.get_tag_string("Exif.Image.ResolutionUnit") {
+                resolution.unit=resu;
+            }else{
+                resolution.unit="".to_string();
+            }
+
+        }
+        return resolution;
+    }
  
 
  //Déterminez si le type de fichier chargé prend en charge les métadonnées IPTC.
