@@ -19,19 +19,19 @@ mod tests {
     fn test_gps_longitude() {
         let path = "images/info.JPG";
         let meta = imagemanager::image::MetadataImage::new(&path);
-        assert_eq!(meta.get_gps_longitude(), 2.1487555555555553);
+        assert_eq!(meta.get_image_gps().longitude, 2.1487555555555553);
     }
     #[test]
     fn test_gps_latitude() {
         let path = "images/info.JPG";
         let meta = imagemanager::image::MetadataImage::new(&path);
-        assert_eq!(meta.get_gps_latitude(), 48.812886111111105);
+        assert_eq!(meta.get_image_gps().latitude, 48.812886111111105);
     }
     #[test]
     fn test_gps_altitude() {
         let path = "images/info.JPG";
         let meta = imagemanager::image::MetadataImage::new(&path);
-        assert_eq!(meta.get_gps_altitude(), 131.28054298642533);
+        assert_eq!(meta.get_image_gps().altitude, 131.28054298642533);
     }
     #[test]
     fn test_image_type() {
