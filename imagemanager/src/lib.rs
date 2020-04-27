@@ -12,6 +12,12 @@ pub struct Date {
     pub datetime: String,
     pub digitized: String
 }
+//struct pour la résolution de l'image
+pub struct Resolution {
+    pub x: String,
+    pub y: String,
+    pub unit: String
+}
 //struct pour la llocalisation gps de l'image
 pub struct GPS {
     pub longitude: f64,
