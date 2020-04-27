@@ -254,6 +254,26 @@ let mut iptc=true;
 
 
 }
+//************************ afficher iptc infomatiions for image *********************************
+pub fn show_iptc_data(&self)-> (){
+    
+        
+    if let  Ok(meta) = rexiv2::Metadata::new_from_path(&self.image ) {
+        if let Ok(tags)=meta.get_iptc_tags(){
+            println!("************* Affichage de IPTC tags *************");
+        for i in 0..tags.len() {
+            println!("");
+            if let Ok(xamp_info) = meta.get_tag_string(&tags[i]) {
+                
+                println!("{:?}   :  {:?}",&tags[i],xamp_info);
+            }
+        }
+    }else{
+        println!("pas de tag ");
+    }
+    }
+
+}
 
 }
 }
