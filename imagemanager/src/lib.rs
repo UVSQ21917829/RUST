@@ -1,4 +1,5 @@
 
+
 #![crate_type = "lib"]
 use std::path::Path;
 
@@ -6,6 +7,12 @@ extern crate rexiv2 as rexiv2;
 
 pub mod image{
 #[allow(dead_code)]
+//struct pour les trois dates exif
+pub struct Date {
+    pub origin: String,
+    pub datetime: String,
+    pub digitized: String
+}
 //MetadataImage struct 
 pub struct MetadataImage {
     pub image:  String, //the path of the image 
@@ -19,6 +26,7 @@ impl MetadataImage{
  
         return MetadataImage { image: s.to_string() }
     }
+    
     //La fonction qui permet de récuperer la date et le temps de créer l'image
     pub fn get_image_date_time(&self)-> String{
         let mut date = String::new();
@@ -40,6 +48,24 @@ impl MetadataImage{
         }
         return typee;
     }
+    
+    //récuperer le flash de l'image
+    pub fn get_image_flash(&self)-> String{
+        let mut flash = String::new();
+        if let  Ok(meta) = rexiv2::Metadata::new_from_path(&self.image ) {
+            if let Ok(f) = meta.get_tag_string("Exif.Photo.Flash") {
+                flash=f;
+            }else{
+                flash="".to_string();
+            }
+        }
+        return flash;
+    }
+    
+    
+    //
+
+    
     //recuperer gpsinfo: longitude
     pub fn get_gps_longitude(&self)-> f64{
         let mut longitude =0.0_f64;
@@ -80,7 +106,8 @@ impl MetadataImage{
         }     
         return altitude;
     }
-    
+    //
+
  //Déterminez si le type de fichier chargé prend en charge les métadonnées IPTC.
  pub fn supports_iptc_fn(&self) -> bool{
   let mut supports_iptc=true;
@@ -181,5 +208,6 @@ let mut iptc=true;
   meta.clear_xmp();
   return true;
  }
+
 }
 }
