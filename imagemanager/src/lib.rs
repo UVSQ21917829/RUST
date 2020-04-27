@@ -234,6 +234,27 @@ let mut iptc=true;
   return true;
  }
 
+ //************************ afficher EXIF infomatiions for image *********************************
+pub fn show_exif_data(&self)-> (){
+    
+        
+    if let  Ok(meta) = rexiv2::Metadata::new_from_path(&self.image ) {
+        if let Ok(tags)=meta.get_exif_tags(){
+            println!("************* Affichage de EXIF tags *************");
+        for i in 0..tags.len() {
+            println!("");
+            if let Ok(xamp_info) = meta.get_tag_string(&tags[i]) {
+                
+                println!("{:?}   :  {:?}",&tags[i],xamp_info);
+            }
+        }
+    }else{
+        println!("pas de tag exif ");
+    }
+    }
+
+}
+
  //************************ afficher xmp infomatiions for image *********************************
  pub fn show_xmp_data(&self)-> (){
     
@@ -274,6 +295,7 @@ pub fn show_iptc_data(&self)-> (){
     }
 
 }
+
 
 }
 }
