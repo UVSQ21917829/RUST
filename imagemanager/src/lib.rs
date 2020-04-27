@@ -4,8 +4,6 @@
 #![crate_type = "lib"]
 use std::path::Path;
 
-use std::fs;
-use std::ptr;
 extern crate rexiv2 as rexiv2;
 
 pub mod image{
@@ -121,8 +119,60 @@ let mut exif=true;
            }
 }  return exif;
  }
+ //Indique si le fichier chargé contient des métadonnées XMP.
+ pub fn has_xmp_fn(&self) -> bool{
+let mut xmp=true;
+  if let  meta = rexiv2::Metadata::new_from_path(&self.image ).unwrap() {
+   if meta.has_xmp()==true {
+           return xmp;
+       }else{
+            xmp=false;
+           }
+}  return xmp;
+ }
+ //Indique si le fichier chargé contient des métadonnées IPTC.
+ pub fn has_iptc_fn(&self) -> bool{
+let mut iptc=true;
+  if let  meta = rexiv2::Metadata::new_from_path(&self.image ).unwrap() {
+   if meta.has_iptc()==true {
+           return iptc;
+       }else{
+            iptc=false;
+           }
+}  return iptc;
+ }
+//Obtenez la largeur réelle de pixels non pivotés / non orientés de l'image chargée.
+ pub fn get_pixel_width_img(&self) -> i32{
+          
+         let  meta = rexiv2::Metadata::new_from_path(&self.image ).unwrap() ;
+            let  pix_w  = meta.get_pixel_width() ;
+            return pix_w;
+        }
 
-
-
+ //Obtenez la hauteur réelle de pixels non pivotés / non orientés de l'image chargée.
+ pub fn get_pixel_height_img(&self) -> i32{
+         let  meta = rexiv2::Metadata::new_from_path(&self.image ).unwrap() ;
+            let  pix_h  = meta.get_pixel_height() ;
+           return pix_h;
+            
+ }
+  //Supprime toutes les métadonnées Exif.
+ pub fn clear_exif_fn(&self)-> bool{
+  let  meta = rexiv2::Metadata::new_from_path(&self.image ).unwrap() ;
+  meta.clear_exif();
+  return true;
+ }
+  //Supprime toutes les métadonnées IPTC.
+ pub fn clear_iptc_fn(&self)-> bool{
+  let  meta = rexiv2::Metadata::new_from_path(&self.image ).unwrap() ;
+  meta.clear_iptc();
+  return true;
+ }
+  //Supprime toutes les métadonnées XMP.
+ pub fn clear_xmp_fn(&self)-> bool{
+  let  meta = rexiv2::Metadata::new_from_path(&self.image ).unwrap() ;
+  meta.clear_xmp();
+  return true;
+ }
 }
 }
