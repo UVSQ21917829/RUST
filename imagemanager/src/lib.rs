@@ -27,14 +27,26 @@ impl MetadataImage{
         return MetadataImage { image: s.to_string() }
     }
     
-    //La fonction qui permet de récuperer la date et le temps de créer l'image
-    pub fn get_image_date_time(&self)-> String{
-        let mut date = String::new();
+    //La fonction qui permet de récuperer les dates (et heures)  l'image
+    pub fn get_image_date(&self)-> Date{
+        let mut date = Date{origin:"0".to_string(),
+         datetime: "0".to_string(),
+         digitized:"0".to_string(),};
         if let  Ok(meta) = rexiv2::Metadata::new_from_path(&self.image ) {
-            if let Ok(time) = meta.get_tag_string("Exif.Image.DateTime") {
-                date=time;
+            if let Ok(time) = meta.get_tag_string("Exif.Photo.DateTimeOriginal") {
+                date.origin=time;
             }else{
-                date="".to_string();
+                date.origin="".to_string();
+            }
+            if let Ok(time) = meta.get_tag_string("Exif.Image.DateTime") {
+                date.datetime=time;
+            }else{
+                date.datetime="".to_string();
+            }
+            if let Ok(time) = meta.get_tag_string("Exif.Photo.DateTimeDigitized") {
+                date.digitized=time;
+            }else{
+                date.digitized="".to_string();
             }
         }
         return date;
@@ -48,22 +60,22 @@ impl MetadataImage{
         }
         return typee;
     }
-    
-    //récuperer le flash de l'image
-    pub fn get_image_flash(&self)-> String{
-        let mut flash = String::new();
+    //récuperer la vitesse ISO utilisée par l'appareil photo prenant la photo
+
+    pub fn get_image_iso_speed(&self)-> i32{
+        let mut speed = 0_i32;
         if let  Ok(meta) = rexiv2::Metadata::new_from_path(&self.image ) {
-            if let Ok(f) = meta.get_tag_string("Exif.Photo.Flash") {
-                flash=f;
+            if let  Some(v) = meta.get_iso_speed() {
+                speed=v;
             }else{
-                flash="".to_string();
+                speed=0;
             }
         }
-        return flash;
+        return speed;
     }
     
     
-    //
+ 
 
     
     //recuperer gpsinfo: longitude
