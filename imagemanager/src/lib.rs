@@ -1,6 +1,4 @@
 
-
-
 #![crate_type = "lib"]
 use std::path::Path;
 
@@ -33,10 +31,19 @@ impl MetadataImage{
         }
         return date;
     }
-    //recuper gpsinfo: longitude
+    //récuperer le type d'image
+    pub fn get_image_type(&self)-> String{
+        let mut typee = String::new();
+        if let  Ok(meta) = rexiv2::Metadata::new_from_path(&self.image ) {
+            typee= meta.get_media_type().unwrap().to_string();
+
+        }
+        return typee;
+    }
+    //recuperer gpsinfo: longitude
     pub fn get_gps_longitude(&self)-> f64{
         let mut longitude =0.0_f64;
-        if let  meta = rexiv2::Metadata::new_from_path(&self.image ).unwrap() {
+        if let  Ok(meta) = rexiv2::Metadata::new_from_path(&self.image ) {
            if let Some(gps)=meta.get_gps_info(){
            longitude=gps.longitude;
            }
@@ -47,10 +54,10 @@ impl MetadataImage{
     
         return longitude;
     }
-    //recuper gpsinfo: Latitude
+    //recuperer gpsinfo: Latitude
     pub fn get_gps_latitude(&self)-> f64{
         let mut latitude =0.0_f64;
-        if let  meta = rexiv2::Metadata::new_from_path(&self.image ).unwrap() {
+        if let  Ok(meta) = rexiv2::Metadata::new_from_path(&self.image ) {
            if let Some(gps)=meta.get_gps_info(){
             latitude=gps.latitude;
            }
@@ -60,10 +67,10 @@ impl MetadataImage{
         }     
         return latitude;
     }
-    //recuper gpsinfo: Altitude
+    //recuperer gpsinfo: Altitude
     pub fn get_gps_altitude(&self)-> f64{
         let mut altitude =0.0_f64;
-        if let  meta = rexiv2::Metadata::new_from_path(&self.image ).unwrap() {
+        if let  Ok(meta) = rexiv2::Metadata::new_from_path(&self.image ) {
            if let Some(gps)=meta.get_gps_info(){
             altitude=gps.altitude;
            }
