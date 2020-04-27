@@ -13,7 +13,7 @@ mod tests {
     fn test_date() {
         let path = "images/info.JPG";
         let meta = imagemanager::image::MetadataImage::new(&path);
-        assert_eq!(meta.get_image_date_time(), "2017:05:10 10:30:25");
+        assert_eq!(meta.get_image_date().datetime, "2017:05:10 10:30:25");
     }
     #[test]
     fn test_gps_longitude() {
@@ -38,6 +38,12 @@ mod tests {
         let _path = "images/info.JPG";
         let meta = imagemanager::image::MetadataImage::new(&_path);
         assert_eq!(meta.get_image_type(), "image/jpeg");
+    }
+    #[test]
+    fn test_iso_speed() {
+        let _path = "images/info.JPG";
+        let meta = imagemanager::image::MetadataImage::new(&_path);
+        assert_eq!(meta.get_image_iso_speed(), 80);
     }
       #[test]
       fn test_supports_exif_fn() {
