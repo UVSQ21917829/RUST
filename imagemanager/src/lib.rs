@@ -13,6 +13,12 @@ pub struct Date {
     pub datetime: String,
     pub digitized: String
 }
+//struct pour la llocalisation gps de l'image
+pub struct GPS {
+    pub longitude: f64,
+    pub latitude: f64,
+    pub altitude: f64
+}
 //MetadataImage struct 
 pub struct MetadataImage {
     pub image:  String, //the path of the image 
