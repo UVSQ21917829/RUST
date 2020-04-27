@@ -45,6 +45,12 @@ mod tests {
         let meta = imagemanager::image::MetadataImage::new(&_path);
         assert_eq!(meta.get_image_iso_speed(), 80);
     }
+    #[test]
+    fn test_resolution_image() {
+        let path = "images/info.JPG";
+        let meta = imagemanager::image::MetadataImage::new(&path);
+        assert_eq!(meta.get_image_resolution().x, "72/1");
+    }
       #[test]
       fn test_supports_exif_fn() {
         let path = "images/info.JPG";
