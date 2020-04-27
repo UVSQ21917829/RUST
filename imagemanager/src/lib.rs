@@ -1,7 +1,6 @@
 
 
 #![crate_type = "lib"]
-use std::path::Path;
 
 extern crate rexiv2 as rexiv2;
 
@@ -80,51 +79,26 @@ impl MetadataImage{
         return speed;
     }
     
-    
- 
+    //les informations de localosations GPS
+    pub fn get_image_gps(&self)-> GPS{
+        let mut gps =GPS{
+            longitude:0.0_f64,
+            latitude:0.0_f64,
+            altitude:0.0_f64,
 
-    
-    //recuperer gpsinfo: longitude
-    pub fn get_gps_longitude(&self)-> f64{
-        let mut longitude =0.0_f64;
+        };
         if let  Ok(meta) = rexiv2::Metadata::new_from_path(&self.image ) {
-           if let Some(gps)=meta.get_gps_info(){
-           longitude=gps.longitude;
+           if let Some(loc)=meta.get_gps_info(){
+           gps.longitude=loc.longitude;
+           gps.latitude=loc.latitude;
+           gps.altitude=loc.altitude;
            }
-           else{
-            longitude=0.0;
-           }
+           
         }     
     
-        return longitude;
+        return gps;
     }
-    //recuperer gpsinfo: Latitude
-    pub fn get_gps_latitude(&self)-> f64{
-        let mut latitude =0.0_f64;
-        if let  Ok(meta) = rexiv2::Metadata::new_from_path(&self.image ) {
-           if let Some(gps)=meta.get_gps_info(){
-            latitude=gps.latitude;
-           }
-           else{
-            latitude=0.0;
-           }
-        }     
-        return latitude;
-    }
-    //recuperer gpsinfo: Altitude
-    pub fn get_gps_altitude(&self)-> f64{
-        let mut altitude =0.0_f64;
-        if let  Ok(meta) = rexiv2::Metadata::new_from_path(&self.image ) {
-           if let Some(gps)=meta.get_gps_info(){
-            altitude=gps.altitude;
-           }
-           else{
-            altitude=0.0;
-           }
-        }     
-        return altitude;
-    }
-    //
+ 
 
  //Déterminez si le type de fichier chargé prend en charge les métadonnées IPTC.
  pub fn supports_iptc_fn(&self) -> bool{
