@@ -234,5 +234,26 @@ let mut iptc=true;
   return true;
  }
 
+ //************************ afficher xmp infomatiions for image *********************************
+ pub fn show_xmp_data(&self)-> (){
+    
+        
+    if let  Ok(meta) = rexiv2::Metadata::new_from_path(&self.image ) {
+        if let Ok(tags)=meta.get_xmp_tags(){
+            println!("************* Affichage de XMP tags *************");
+            println!("");
+        for i in 0..tags.len() {
+            if let Ok(xamp_info) = meta.get_tag_string(&tags[i]) {
+                println!("{:?}   :  {:?}",&tags[i],xamp_info);
+            }
+        }
+    }else{
+        println!("pas de tag ");
+    }
+    }
+
+
+}
+
 }
 }
