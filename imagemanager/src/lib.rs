@@ -76,5 +76,53 @@ impl MetadataImage{
         return altitude;
     }
     
+ //Déterminez si le type de fichier chargé prend en charge les métadonnées IPTC.
+ pub fn supports_iptc_fn(&self) -> bool{
+  let mut supports_iptc=true;
+  if let  meta = rexiv2::Metadata::new_from_path(&self.image ).unwrap() {
+   if meta.supports_iptc()==true {
+           return supports_iptc;
+       }else{
+            supports_iptc=false;
+           }
+}  return supports_iptc;
+ }
+
+ //Déterminez si le type de fichier chargé prend en charge les métadonnées IPTC.
+ pub fn supports_exif_fn(&self) -> bool{
+  let mut supports_iptc=true;
+  if let  meta = rexiv2::Metadata::new_from_path(&self.image ).unwrap() {
+   if meta.supports_iptc()==true {
+           return supports_iptc;
+       }else{
+            supports_iptc=false;
+           }
+}  return supports_iptc;
+ }
+ //Déterminez si le type de fichier chargé prend en charge les métadonnées XMP.
+ pub fn supports_xmp_fn(&self) -> bool{
+let mut supports_xmp=true;
+  if let  meta = rexiv2::Metadata::new_from_path(&self.image ).unwrap() {
+   if meta.supports_xmp()==true {
+           return supports_xmp;
+       }else{
+            supports_xmp=false;
+           }
+}  return supports_xmp;
+ }
+  //Indique si le fichier chargé contient des métadonnées Exif.
+ pub fn has_exif_fn(&self) -> bool{
+let mut exif=true;
+  if let  meta = rexiv2::Metadata::new_from_path(&self.image ).unwrap() {
+   if meta.has_exif()==true {
+           return exif;
+       }else{
+            exif=false;
+           }
+}  return exif;
+ }
+
+
+
 }
 }
