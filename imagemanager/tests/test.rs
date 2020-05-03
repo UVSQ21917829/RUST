@@ -4,11 +4,11 @@ extern crate imagemanager;
 #[cfg(test)]
 mod tests {  
     #[test]
-    /*fn test_new() {
+    fn test_new() {
         let path = "info.JPG";
-        let meta = imagemanager::image::MetadataImage::new(&path);
-        assert_eq!(meta.image, "info.JPG");
-    }*/
+        let meta = imagemanager::image::MetadataImage::new(&path)unwrap();
+        
+    }
     #[test]
     fn test_date() {
         let path = "images/info.JPG";
