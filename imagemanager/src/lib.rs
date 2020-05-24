@@ -25,7 +25,7 @@ pub mod image {
         pub altitude: f64,
     }
     //MetadataImage struct
-    #[derive(Clone,  Debug, Default, PartialEq)]
+    
     pub struct MetadataImage {
         //pub image:  String, //the path of the image
         image: rexiv2::Metadata,
