@@ -1,7 +1,9 @@
 #![crate_type = "lib"]
 
 extern crate rexiv2 as rexiv2;
+
 pub use rexiv2::Rexiv2Error;
+pub use std::fs;
 pub mod image {
     #[allow(dead_code)]
     //struct pour les trois dates exif
@@ -23,21 +25,36 @@ pub mod image {
         pub altitude: f64,
     }
     //MetadataImage struct
-
+    #[derive(Clone,  Debug, Default, PartialEq)]
     pub struct MetadataImage {
         //pub image:  String, //the path of the image
         image: rexiv2::Metadata,
+        name: String,
+    }
+    pub struct ImagesToManage {
+        //list of images 
+        list: Vec<MetadataImage>,
+        
     }
 
     impl MetadataImage {
         //new method to create a new MetadataImage
-        pub fn new(s: &str) -> Result<MetadataImage, rexiv2::Rexiv2Error> {
+        pub fn new(s: String) -> Result<MetadataImage, rexiv2::Rexiv2Error> {
             match rexiv2::Metadata::new_from_path(&s) {
-                Ok(metadata) => return Ok(MetadataImage { image: metadata }),
+                //let path = Path::new("foo.rs");
+
+                //assert_eq!("foo", path.file_stem().unwrap());
+                Ok(metadata) => return Ok(MetadataImage { image: metadata , name:   s}),
                 Err(error) => {
                     return Err(error);
                 }
             };
+        }
+        //new method to create a new MetadataImage
+        pub fn get_name(&self) -> String {
+            
+                    return self.name.clone();
+              
         }
 
         //La fonction qui permet de récuperer les dates (et heures)  l'image
@@ -257,4 +274,49 @@ pub mod image {
             }
         }
     }
+    impl ImagesToManage {
+        //l'initialisation de ImangesManage
+        pub fn new(&self)->Result<ImagesToManage,()>{
+            let paths = std::fs::read_dir("images").unwrap();
+            let mut list :Vec<MetadataImage> = Vec::new();
+            for path in paths {
+                let pathimg=path.unwrap().path().display().to_string();
+                if let  Ok(meta) = MetadataImage::new(pathimg ) {
+                    list.push(meta);
+                }
+            }
+            return  Ok(ImagesToManage { list: list  });
+
+        }
+        
+        pub fn select_by_name(&self,name:String)->Vec<MetadataImage>{
+            let mut images :Vec<MetadataImage> = Vec::new();
+            for i in 0..self.list.len() {
+                if name == self.list[i].get_name(){
+                    images.push(self.list[i]);
+                }
+            }
+            return images;
+
+        }
+        pub fn select_by_date(&self,date:&str)->Vec<MetadataImage>{
+            let mut images :Vec<MetadataImage> = Vec::new();
+            for i in 0..self.list.len() {
+                if date == self.list[i].get_image_date().origin{
+                    images.push(self.list[i]);
+                }
+            }
+            return images;
+        }
+        pub fn select_by_gps(&self,longitude:f64,latitude:f64,altitude:f64)->Vec<MetadataImage>{
+            let mut images :Vec<MetadataImage> = Vec::new();
+            for i in 0..self.list.len() {
+                if longitude == self.list[i].get_image_gps().unwrap().longitude && latitude == self.list[i].get_image_gps().unwrap().latitude && altitude == self.list[i].get_image_gps().unwrap().altitude{
+                    images.push(self.list[i]);
+                }
+            }
+            return images;
+        }
+    }
+
 }
