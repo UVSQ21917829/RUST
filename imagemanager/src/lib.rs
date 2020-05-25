@@ -231,6 +231,17 @@ pub mod image {
             self.image.clear_xmp();
             return true;
         }
+        //ajouter des expressions
+        pub fn add_expressions(&self, tag: &str, value: &str)  {
+            
+            
+            if let Ok(tags) = self.image.get_xmp_tags() {
+                
+                self.image.set_tag_string("Exif.Photo.UserComment",value);
+            }
+          
+       
+        }
         
         // ************************ afficher EXIF infomatiions for image *********************************
         pub fn show_exif_data(&self) -> () {
