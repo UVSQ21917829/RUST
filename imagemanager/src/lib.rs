@@ -242,7 +242,23 @@ pub mod image {
           
        
         }
-        
+        //recuperer des expressions
+        pub fn get_expressions(&self,tag: &str) -> String {
+            
+            if let Ok(tage) = self.image.get_tag_string(&tag) {
+             
+                    return tage;
+                  }
+                  else{
+                      return  "nonea".to_string();
+                  }  
+            
+            
+        }
+        //supprimer des expressions
+        pub fn delete_expressions(&self, tag: &str) -> bool {
+            return self.image.clear_tag(tag);
+        }
         // ************************ afficher EXIF infomatiions for image *********************************
         pub fn show_exif_data(&self) -> () {
             if let Ok(tags) = self.image.get_exif_tags() {
