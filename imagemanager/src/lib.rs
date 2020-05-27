@@ -3,8 +3,9 @@
 extern crate rexiv2 as rexiv2;
 
 pub use rexiv2::Rexiv2Error;
-pub use std::fs;
 pub use std::cell::RefCell;
+pub use std::fs;
+pub use std::io;
 pub mod image {
     #[allow(dead_code)]
     //struct pour les trois dates exif
@@ -29,14 +30,13 @@ pub mod image {
     #[derive(Debug)]
     pub struct MetadataImage {
         //pub image:  String, //the path of the image
-        image: rexiv2::Metadata,
+        pub image: rexiv2::Metadata,
         name: String,
     }
     #[derive(Debug)]
     pub struct ImagesToManage {
-        //list of images 
+        //list of images
         list: Vec<MetadataImage>,
-        
     }
 
     impl MetadataImage {
@@ -46,7 +46,12 @@ pub mod image {
                 //let path = Path::new("foo.rs");
 
                 //assert_eq!("foo", path.file_stem().unwrap());
-                Ok(metadata) => return Ok(MetadataImage { image: metadata , name:   s}),
+                Ok(metadata) => {
+                    return Ok(MetadataImage {
+                        image: metadata,
+                        name: s,
+                    })
+                }
                 Err(error) => {
                     return Err(error);
                 }
@@ -54,9 +59,7 @@ pub mod image {
         }
         //new method to create a new MetadataImage
         pub fn get_name(&self) -> String {
-            
-                    return self.name.clone();
-              
+            return self.name.clone();
         }
 
         //La fonction qui permet de récuperer les dates (et heures)  l'image
@@ -88,7 +91,6 @@ pub mod image {
         //récuperer le type d'image
         pub fn get_image_type(&self) -> String {
             return self.image.get_media_type().unwrap().to_string();
-            
         }
 
         //récuperer la vitesse ISO utilisée par l'appareil photo prenant la photo
@@ -232,32 +234,21 @@ pub mod image {
             return true;
         }
         //ajouter des expressions
-        pub fn add_expressions(&self, tag: &str, value: &str)  {
-            
-            
-            if let Ok(tags) = self.image.get_xmp_tags() {
-                
-                self.image.set_tag_string("Exif.Photo.UserComment",value);
-            }
-          
-       
+        pub fn add_expressions(&self, expressions: &[&str]) {
+            self.image.set_tag_string("Exif.Photo.UserComment", "wakha");
         }
         //recuperer des expressions
-        pub fn get_expressions(&self,tag: &str) -> String {
-            
+        pub fn get_expressions(&self, tag: &str) -> String {
             if let Ok(tage) = self.image.get_tag_string(&tag) {
-             
-                    return tage;
-                  }
-                  else{
-                      return  "nonea".to_string();
-                  }  
-            
-            
+                return tage;
+            } else {
+                return "nonea".to_string();
+            }
         }
         //supprimer des expressions
-        pub fn delete_expressions(&self, tag: &str) -> bool {
-            return self.image.clear_tag(tag);
+        pub fn delete_expressions(&self, expressions: &[&str]) -> bool {
+            //return self.image.clear_tag(tag);
+            return true;
         }
         // ************************ afficher EXIF infomatiions for image *********************************
         pub fn show_exif_data(&self) -> () {
@@ -306,50 +297,104 @@ pub mod image {
     }
     impl ImagesToManage {
         //l'initialisation de ImangesManage
-        pub fn new()->Result<ImagesToManage,()>{
+        pub fn new() -> Result<ImagesToManage, ()> {
             let paths = std::fs::read_dir("images").unwrap();
-            let mut list :Vec<MetadataImage> = Vec::new();
+            let mut list: Vec<MetadataImage> = Vec::new();
             for path in paths {
-                let pathimg=path.unwrap().path().display().to_string();
-                if let  Ok(meta) = MetadataImage::new(pathimg ) {
+                let pathimg = path.unwrap().path().display().to_string();
+                if let Ok(meta) = MetadataImage::new(pathimg) {
                     list.push(meta);
                 }
             }
-            return  Ok(ImagesToManage { list: list  });
-
+            return Ok(ImagesToManage { list: list });
         }
-        
-        pub fn select_by_name(&self,name:String)->Vec<&MetadataImage>{
-            let mut images :Vec<& MetadataImage> =  Vec::new();
+
+        pub fn select_by_name(&self, name: String) -> Vec<&MetadataImage> {
+            let mut images: Vec<&MetadataImage> = Vec::new();
             for i in 0..self.list.len() {
-                if name == self.list[i].get_name(){
+                if name == self.list[i].get_name() {
                     images.push(&self.list[i]);
                 }
             }
             return images;
-
         }
-        pub fn select_by_date(&self,date:String)->Vec<&MetadataImage>{
-            let mut images :Vec<&MetadataImage> =  Vec::new();
+        pub fn select_by_date(&self, date: String) -> Vec<&MetadataImage> {
+            let mut images: Vec<&MetadataImage> = Vec::new();
             for i in 0..self.list.len() {
-                let mut s=self.list[i].get_image_date().origin.clone();
+                let mut s = self.list[i].get_image_date().origin.clone();
                 let v: Vec<_> = s.split(' ').collect();
-                if date == v[0]{
+                if date == v[0] {
                     images.push(&self.list[i]);
                 }
             }
             return images;
         }
-        pub fn select_by_gps(&self,longitude:f64,latitude:f64,altitude:f64)->Vec<&MetadataImage>{
-            let mut images :Vec<&MetadataImage> =  Vec::new();
+        pub fn select_by_gps(
+            &self,
+            longitude: f64,
+            latitude: f64,
+            altitude: f64,
+        ) -> Vec<&MetadataImage> {
+            let mut images: Vec<&MetadataImage> = Vec::new();
             for i in 0..self.list.len() {
-                if let Some(imagemeta)=self.list[i].get_image_gps(){
-                if longitude == imagemeta.longitude && latitude == imagemeta.latitude && altitude == imagemeta.altitude{
-                    images.push(&self.list[i]);
-                }}
+                if let Some(imagemeta) = self.list[i].get_image_gps() {
+                    if longitude == imagemeta.longitude
+                        && latitude == imagemeta.latitude
+                        && altitude == imagemeta.altitude
+                    {
+                        images.push(&self.list[i]);
+                    }
+                }
             }
             return images;
+        }
+        pub fn after_select(images: Vec<&MetadataImage>) {
+            if images.len() != 0 {
+                println!("pas de photos");
+            } else {
+                println!(
+                    "Que voulez faire:
+                       1: Ajouter des comments:
+                       2: Suppression des comments:"
+                );
+                let mut input = String::new();
+                std::io::stdin()
+                    .read_line(&mut input)
+                    .expect("Echec de lire la ligne");
+                let input = input
+                    .trim()
+                    .parse::<u32>()
+                    .map_err(|_| format!("{} n'est pas un nombre", input))
+                    .unwrap();
+                match input {
+                    1 => {
+                        println!(
+                            "entrer les expressions chaque expression doit être entre les guemués:"
+                        );
+
+                        let mut input = String::new();
+                        std::io::stdin()
+                            .read_line(&mut input)
+                            .expect("Echec de lire la ligne");
+                        let v: Vec<&str> = input.split('/').collect();
+                        Self::add_expressions(images, &v);
+                    }
+                    _ => {
+                        println!("break");
+                        
+                    }
+                }
+            }
+        }
+        pub fn delete_expressions(images: Vec<&MetadataImage>, expressions: &[&str]) {
+            for i in 0..images.len() {
+                images[i].delete_expressions(expressions);
+            }
+        }
+        pub fn add_expressions(images: Vec<&MetadataImage>, expressions: &[&str]) {
+            for i in 0..images.len() {
+                images[i].add_expressions(expressions);
+            }
         }
     }
-
 }
