@@ -38,18 +38,15 @@ fn main() {
                         .read_line(&mut name)
                         .expect("Echec de lire la ligne");
                     println!("Le nom est :{}", name);
-                    
                     images = gestionnaire.select_by_name(name);
                     imagemanager::image::ImagesToManage::after_select(images);
                 }
                 2 => {
-                    
-                        println!("Veuillez entrer une date valide 0000:00:00");
+                    println!("Veuillez entrer une date valide 0000:00:00");
                     let mut date = String::new();
                     io::stdin()
                         .read_line(&mut date)
                         .expect("Echec de lire la ligne");
-                    println!("La date est :{}", date);
                     images = gestionnaire.select_by_date(date);
                     imagemanager::image::ImagesToManage::after_select(images);
                 }
@@ -85,6 +82,38 @@ fn main() {
                     images = gestionnaire.select_by_gps(long, lat, alt);
                     imagemanager::image::ImagesToManage::after_select(images);
                 }
+                4 => {
+                    println!("Veuillez entrer le nom d appariel");
+                    let mut app = String::new();
+                    io::stdin()
+                        .read_line(&mut app)
+                        .expect("Echec de lire la ligne");
+                    images = gestionnaire.select_by_date(app);
+                    imagemanager::image::ImagesToManage::after_select(images);
+                }
+                5 => {
+                    println!("Veuillez entrer la resolotion x");
+                    let mut x = String::new();
+                    io::stdin()
+                        .read_line(&mut x)
+                        .expect("Echec de lire la ligne");
+                    
+                    let mut y = String::new();
+                    io::stdin()
+                        .read_line(&mut y)
+                        .expect("Echec de lire la ligne");
+                    
+
+                    
+                }
+                6 => {
+                    println!("Veuillez entrer une expression");
+                    let mut tag = String::new();
+                    io::stdin()
+                        .read_line(&mut tag)
+                        .expect("Echec de lire la ligne");
+                    
+                }
 
                 _ => {
                     println!("entrer un nombre valide ");
@@ -92,5 +121,4 @@ fn main() {
             }
         }
     }
-    
 }
