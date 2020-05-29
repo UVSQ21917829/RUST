@@ -57,12 +57,10 @@ pub mod image {
                 }
             };
         }
-        //sauvgarder les metadonnées de la photo dans le fichier image (self.get_name() : permet de recuperer son chemin) 
+        //sauvgarder les metadonnées de la photo dans le fichier image (self.get_name() : permet de recuperer son chemin)
         pub fn save(&self) {
-            
             self.image.save_to_file(self.get_name());
         }
-        
         //new method to create a new MetadataImage
         pub fn get_name(&self) -> String {
             return self.name.clone();
@@ -252,10 +250,19 @@ pub mod image {
         //ajouter des expressions
         pub fn add_expressions(&self, expressions: &[&str]) {
             let mut comments = String::new();
+            let mut tags: Vec<String> = Vec::new();
+            tags = self.get_expressions();
+            for i in 0..tags.len() {
+                if i == 0 {
+                    comments += &(tags[i].trim());
+                } else {
+                    comments += &(";".to_owned() + tags[i].trim());
+                }
+            }
             for i in 0..expressions.len() {
-                if i==0 {
+                if i == 0 && comments == "" {
                     comments += &(expressions[i].trim());
-                }else{
+                } else {
                     comments += &(";".to_owned() + expressions[i].trim());
                 }
             }
@@ -276,8 +283,24 @@ pub mod image {
         }
         //supprimer des expressions
         pub fn delete_expressions(&self, expressions: &[&str]) -> bool {
-            //return self.image.clear_tag(tag);
-            return true;
+            let mut tags: Vec<String> = Vec::new();
+            tags=self.get_expressions();
+            let mut deleted=false;          
+            for i in 0..expressions.len() {
+                tags.remove(
+                    tags.iter()
+                        .position(|x| *x == expressions[i].trim())
+                        .expect("cette tag n'exsiste pas"),
+                );
+                if let Some(pos) = tags.iter().position(|x| *x == expressions[i]) {
+                    deleted=true;
+                    tags.remove(pos);
+                }
+                
+               
+            }
+           // self.add_expressions();
+            return deleted;
         }
         //*********  afficher des info d'une image
         pub fn print_image(&self) {
@@ -353,7 +376,7 @@ pub mod image {
         pub fn select_by_name(&self, name: String) -> Vec<&MetadataImage> {
             let mut images: Vec<&MetadataImage> = Vec::new();
             for i in 0..self.list.len() {
-                if  self.list[i].get_name().contains(&name) {
+                if self.list[i].get_name().contains(&name) {
                     images.push(&self.list[i]);
                 }
             }
@@ -428,7 +451,7 @@ pub mod image {
                     .unwrap();
                 match input {
                     1 => {
-                        println!("entrer les expressions (séparer par / ):");
+                        println!("entrer un ou plusieurs expressions à ajouter dans les metadonnées de ces images (séparer par / ):");
 
                         let mut input = String::new();
                         std::io::stdin()
@@ -436,6 +459,17 @@ pub mod image {
                             .expect("Echec de lire la ligne");
                         let v: Vec<&str> = input.split('/').collect();
                         Self::add_expressions(images.to_vec(), &v);
+                        Self::save(images.to_vec());
+                    }
+                    2 => {
+                        println!("entrer un ou plusieurs expressions à supprimer dans les metadonnées de ces images(séparer par / ):");
+
+                        let mut input = String::new();
+                        std::io::stdin()
+                            .read_line(&mut input)
+                            .expect("Echec de lire la ligne");
+                        let v: Vec<&str> = input.split('/').collect();
+                        Self::delete_expressions(images.to_vec(), &v);
                         Self::save(images.to_vec());
                     }
                     _ => {
@@ -446,13 +480,12 @@ pub mod image {
         }
         pub fn print_all(images: &Vec<&MetadataImage>) {
             for i in 0..images.len() {
-                print!("{:}",i);
+                print!("{:}", i);
                 images[i].print_image();
             }
         }
         pub fn delete_expressions(images: Vec<&MetadataImage>, expressions: &[&str]) {
             for i in 0..images.len() {
-                
                 images[i].delete_expressions(expressions);
             }
         }
@@ -461,11 +494,10 @@ pub mod image {
                 images[i].add_expressions(expressions);
             }
         }
-        pub fn save(images: Vec<&MetadataImage> ){
+        pub fn save(images: Vec<&MetadataImage>) {
             for i in 0..images.len() {
                 images[i].save();
             }
         }
-        
     }
 }
