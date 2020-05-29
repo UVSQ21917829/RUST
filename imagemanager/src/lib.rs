@@ -57,6 +57,11 @@ pub mod image {
                 }
             };
         }
+        //sauvgarder les metadonnées de la photo dans le fichier image (self.get_name() : permet de recuperer son chemin) 
+        pub fn save(&self) {
+            
+            self.image.save_to_file(self.get_name());
+        }
         
         //new method to create a new MetadataImage
         pub fn get_name(&self) -> String {
@@ -431,6 +436,7 @@ pub mod image {
                             .expect("Echec de lire la ligne");
                         let v: Vec<&str> = input.split('/').collect();
                         Self::add_expressions(images.to_vec(), &v);
+                        Self::save(images.to_vec());
                     }
                     _ => {
                         println!("break");
@@ -440,17 +446,24 @@ pub mod image {
         }
         pub fn print_all(images: &Vec<&MetadataImage>) {
             for i in 0..images.len() {
+                print!("{:}",i);
                 images[i].print_image();
             }
         }
         pub fn delete_expressions(images: Vec<&MetadataImage>, expressions: &[&str]) {
             for i in 0..images.len() {
+                
                 images[i].delete_expressions(expressions);
             }
         }
         pub fn add_expressions(images: Vec<&MetadataImage>, expressions: &[&str]) {
             for i in 0..images.len() {
                 images[i].add_expressions(expressions);
+            }
+        }
+        pub fn save(images: Vec<&MetadataImage> ){
+            for i in 0..images.len() {
+                images[i].save();
             }
         }
         
