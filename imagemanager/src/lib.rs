@@ -57,6 +57,7 @@ pub mod image {
                 }
             };
         }
+        
         //new method to create a new MetadataImage
         pub fn get_name(&self) -> String {
             return self.name.clone();
@@ -87,7 +88,16 @@ pub mod image {
 
             return date;
         }
-
+        //recuperer le model //appariel photo
+        pub fn get_image_model(&self) -> String {
+            let mut modele = String::new();
+            if let Ok(modelee) = self.image.get_tag_string("Exif.Image.Model") {
+                modele = modelee;
+            } else {
+                modele = "".to_string();
+            }
+            return modele;
+        }
         //récuperer le type d'image
         pub fn get_image_type(&self) -> String {
             return self.image.get_media_type().unwrap().to_string();
@@ -233,22 +243,48 @@ pub mod image {
             self.image.clear_xmp();
             return true;
         }
+
         //ajouter des expressions
         pub fn add_expressions(&self, expressions: &[&str]) {
-            self.image.set_tag_string("Exif.Photo.UserComment", "wakha");
+            let mut comments = String::new();
+            for i in 0..expressions.len() {
+                if i==0 {
+                    comments += &(expressions[i].trim());
+                }else{
+                    comments += &(";".to_owned() + expressions[i].trim());
+                }
+            }
+            self.image
+                .set_tag_string("Exif.Photo.UserComment", &comments);
         }
         //recuperer des expressions
-        pub fn get_expressions(&self, tag: &str) -> String {
-            if let Ok(tage) = self.image.get_tag_string(&tag) {
-                return tage;
-            } else {
-                return "nonea".to_string();
+        pub fn get_expressions(&self) -> Vec<String> {
+            let mut expressions: Vec<String> = Vec::new();
+            if let Ok(tags) = self.image.get_tag_string("Exif.Photo.UserComment") {
+                let s = tags.clone();
+                let v: Vec<_> = s.split(';').collect();
+                for i in 0..v.len() {
+                    expressions.push(v[i].to_string());
+                }
             }
+            return expressions;
         }
         //supprimer des expressions
         pub fn delete_expressions(&self, expressions: &[&str]) -> bool {
             //return self.image.clear_tag(tag);
             return true;
+        }
+        //*********  afficher des info d'une image
+        pub fn print_image(&self) {
+            println!(
+                "image: {:?} type: {:?} camera: {:?} resolution(x={:?},y={:?})  tags:{:?}",
+                self.get_name(),
+                self.get_image_type(),
+                self.get_image_model(),
+                self.get_image_resolution().x,
+                self.get_image_resolution().y,
+                self.get_expressions()
+            )
         }
         // ************************ afficher EXIF infomatiions for image *********************************
         pub fn show_exif_data(&self) -> () {
@@ -291,7 +327,7 @@ pub mod image {
                     }
                 }
             } else {
-                println!("pas de tag ");
+                println!("pas de tag s");
             }
         }
     }
@@ -312,7 +348,7 @@ pub mod image {
         pub fn select_by_name(&self, name: String) -> Vec<&MetadataImage> {
             let mut images: Vec<&MetadataImage> = Vec::new();
             for i in 0..self.list.len() {
-                if name == self.list[i].get_name() {
+                if  self.list[i].get_name().contains(&name) {
                     images.push(&self.list[i]);
                 }
             }
@@ -348,8 +384,27 @@ pub mod image {
             }
             return images;
         }
-        pub fn after_select(images: Vec<&MetadataImage>) {
-            if images.len() != 0 {
+        pub fn select_by_camera(&self, date: String) -> Vec<&MetadataImage> {
+            let mut images: Vec<&MetadataImage> = Vec::new();
+            for i in 0..self.list.len() {
+                if date == self.list[i].get_image_model() {
+                    images.push(&self.list[i]);
+                }
+            }
+            return images;
+        }
+        pub fn select_by_resolutio(&self, x: String, y: String) -> Vec<&MetadataImage> {
+            let mut images: Vec<&MetadataImage> = Vec::new();
+            for i in 0..self.list.len() {
+                let imagemeta = self.list[i].get_image_resolution();
+                if x == imagemeta.x && y == imagemeta.y {
+                    images.push(&self.list[i]);
+                }
+            }
+            return images;
+        }
+        pub fn after_select(images: &Vec<&MetadataImage>) {
+            if images.len() == 0 {
                 println!("pas de photos");
             } else {
                 println!(
@@ -368,22 +423,24 @@ pub mod image {
                     .unwrap();
                 match input {
                     1 => {
-                        println!(
-                            "entrer les expressions chaque expression doit être entre les guemués:"
-                        );
+                        println!("entrer les expressions (séparer par / ):");
 
                         let mut input = String::new();
                         std::io::stdin()
                             .read_line(&mut input)
                             .expect("Echec de lire la ligne");
                         let v: Vec<&str> = input.split('/').collect();
-                        Self::add_expressions(images, &v);
+                        Self::add_expressions(images.to_vec(), &v);
                     }
                     _ => {
                         println!("break");
-                        
                     }
                 }
+            }
+        }
+        pub fn print_all(images: &Vec<&MetadataImage>) {
+            for i in 0..images.len() {
+                images[i].print_image();
             }
         }
         pub fn delete_expressions(images: Vec<&MetadataImage>, expressions: &[&str]) {
@@ -396,5 +453,6 @@ pub mod image {
                 images[i].add_expressions(expressions);
             }
         }
+        
     }
 }
