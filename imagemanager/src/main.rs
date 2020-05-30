@@ -1,4 +1,4 @@
-use ::std::io;
+use std::io;
 extern crate imagemanager;
 extern crate rexiv2 as rexiv2;
 
@@ -121,13 +121,15 @@ fn main() {
                         .read_line(&mut tag)
                         .expect("Echec de lire la ligne");
                     let tag = tag.trim();
-                   // tag.to_string()
+                    images = gestionnaire.select_by_tag(tag.to_string());
+                    imagemanager::image::ImagesToManage::print_all(&images);
+                    imagemanager::image::ImagesToManage::after_select(&images);
                 }
-                _ => {
+                7 => {
                     println!("Vous avez quité l'application ");
                 }
                 _ => {
-                    println!("entrer un nombre valide ");
+                    println!("Entrer un nombre valide 1,2,3,3,4,5,6 ou 7 ");
                 }
             }
         }

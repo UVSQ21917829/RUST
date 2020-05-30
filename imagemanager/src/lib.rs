@@ -3,6 +3,7 @@
 extern crate rexiv2 as rexiv2;
 
 pub use rexiv2::Rexiv2Error;
+pub use std::borrow::Cow;
 pub use std::cell::RefCell;
 pub use std::fs;
 pub use std::io;
@@ -29,10 +30,11 @@ pub mod image {
     //MetadataImage struct
     #[derive(Debug)]
     pub struct MetadataImage {
-        //pub image:  String, //the path of the image
-        pub image: rexiv2::Metadata,
+        
+        image: rexiv2::Metadata,
         name: String,
     }
+    //struct ImagesToManage contient la liste des images et elle permet de les selectionnées et les gérer 
     #[derive(Debug)]
     pub struct ImagesToManage {
         //list of images
@@ -246,9 +248,22 @@ pub mod image {
             self.image.clear_xmp();
             return true;
         }
+        //set expression
+        pub fn set_expressions(&self, expressions: &Vec<String>) {
+            let mut comments = String::new();
 
+            for i in 0..expressions.len() {
+                if i == 0 && comments == "" {
+                    comments += &(expressions[i].trim());
+                } else {
+                    comments += &(";".to_owned() + expressions[i].trim());
+                }
+            }
+            self.image
+                .set_tag_string("Exif.Photo.UserComment", &comments);
+        }
         //ajouter des expressions
-        pub fn add_expressions(&self, expressions: &[&str]) {
+        pub fn add_expressions(&self, expressions: &Vec<String>) {
             let mut comments = String::new();
             let mut tags: Vec<String> = Vec::new();
             tags = self.get_expressions();
@@ -272,41 +287,43 @@ pub mod image {
         //recuperer des expressions
         pub fn get_expressions(&self) -> Vec<String> {
             let mut expressions: Vec<String> = Vec::new();
+
             if let Ok(tags) = self.image.get_tag_string("Exif.Photo.UserComment") {
                 let s = tags.clone();
-                let v: Vec<_> = s.split(';').collect();
-                for i in 0..v.len() {
-                    expressions.push(v[i].to_string());
+                let mut tags: Vec<&str> = Vec::new();
+                tags = s.split(';').collect();
+                for i in 0..tags.len() {
+                    expressions.push(tags[i].to_string());
                 }
             }
             return expressions;
         }
         //supprimer des expressions
-        pub fn delete_expressions(&self, expressions: &[&str]) -> bool {
-            let mut tags: Vec<String> = Vec::new();
-            tags=self.get_expressions();
-            let mut deleted=false;          
+        pub fn delete_expressions(&self, expressions: &Vec<String>) -> bool {
+            let mut exp: Vec<String> = Vec::new();
+            exp = self.get_expressions();
+
+            let mut deleted = false;
             for i in 0..expressions.len() {
-                tags.remove(
-                    tags.iter()
+                exp.remove(
+                    exp.iter()
                         .position(|x| *x == expressions[i].trim())
                         .expect("cette tag n'exsiste pas"),
                 );
-                if let Some(pos) = tags.iter().position(|x| *x == expressions[i]) {
-                    deleted=true;
-                    tags.remove(pos);
+                if let Some(pos) = exp.iter().position(|x| *x == expressions[i]) {
+                    deleted = true;
+                    exp.remove(pos);
                 }
-                
-               
             }
-           // self.add_expressions();
+            self.set_expressions(&exp);
             return deleted;
         }
         //*********  afficher des info d'une image
         pub fn print_image(&self) {
             println!(
-                "image: {:?} type: {:?} camera: {:?} resolution(x={:?},y={:?})  tags:{:?}",
+                "image: {:?} date :{:?}  type: {:?} camera: {:?} resolution(x={:?},y={:?})  tags:{:?}",
                 self.get_name(),
+                self.get_image_date().origin,
                 self.get_image_type(),
                 self.get_image_model(),
                 self.get_image_resolution().x,
@@ -372,7 +389,7 @@ pub mod image {
             }
             return Ok(ImagesToManage { list: list });
         }
-
+        //selection par le nom de l'image
         pub fn select_by_name(&self, name: String) -> Vec<&MetadataImage> {
             let mut images: Vec<&MetadataImage> = Vec::new();
             for i in 0..self.list.len() {
@@ -382,10 +399,11 @@ pub mod image {
             }
             return images;
         }
+        //selection par la date de prive de vue
         pub fn select_by_date(&self, date: String) -> Vec<&MetadataImage> {
             let mut images: Vec<&MetadataImage> = Vec::new();
             for i in 0..self.list.len() {
-                let mut s = self.list[i].get_image_date().origin.clone();
+                let s = self.list[i].get_image_date().origin.clone();
                 let v: Vec<_> = s.split(' ').collect();
                 if date == v[0] {
                     images.push(&self.list[i]);
@@ -393,6 +411,7 @@ pub mod image {
             }
             return images;
         }
+        //selection par la localisation
         pub fn select_by_gps(
             &self,
             longitude: f64,
@@ -412,6 +431,7 @@ pub mod image {
             }
             return images;
         }
+        //selection par appariels photos
         pub fn select_by_camera(&self, date: String) -> Vec<&MetadataImage> {
             let mut images: Vec<&MetadataImage> = Vec::new();
             for i in 0..self.list.len() {
@@ -421,6 +441,7 @@ pub mod image {
             }
             return images;
         }
+        //selection par résolution
         pub fn select_by_resolutio(&self, x: String, y: String) -> Vec<&MetadataImage> {
             let mut images: Vec<&MetadataImage> = Vec::new();
             for i in 0..self.list.len() {
@@ -431,14 +452,28 @@ pub mod image {
             }
             return images;
         }
+        //selection par tag/expression
+        pub fn select_by_tag(&self, tag: String) -> Vec<&MetadataImage> {
+            let mut images: Vec<&MetadataImage> = Vec::new();
+            for i in 0..self.list.len() {
+                for j in 0..self.list[i].get_expressions().len() {
+                    if tag == self.list[i].get_expressions()[j] {
+                        images.push(&self.list[i]);
+                    }
+                }
+            }
+            return images;
+        }
+        //apres la selection on peut ajouter ou supprimer des tags ou des expressions
         pub fn after_select(images: &Vec<&MetadataImage>) {
             if images.len() == 0 {
                 println!("pas de photos");
             } else {
                 println!(
                     "Que voulez faire:
-                       1: Ajouter des comments:
-                       2: Suppression des comments:"
+                       1: Ajouter des comments
+                       2: Suppression des comments
+                       3: Retour"
                 );
                 let mut input = String::new();
                 std::io::stdin()
@@ -458,7 +493,11 @@ pub mod image {
                             .read_line(&mut input)
                             .expect("Echec de lire la ligne");
                         let v: Vec<&str> = input.split('/').collect();
-                        Self::add_expressions(images.to_vec(), &v);
+                        let mut v_tostring: Vec<String> = Vec::new();
+                        for i in 0..v.len() {
+                            v_tostring.push(v[i].to_string().clone());
+                        }
+                        Self::add_expressions(images.to_vec(), v_tostring);
                         Self::save(images.to_vec());
                     }
                     2 => {
@@ -469,8 +508,15 @@ pub mod image {
                             .read_line(&mut input)
                             .expect("Echec de lire la ligne");
                         let v: Vec<&str> = input.split('/').collect();
-                        Self::delete_expressions(images.to_vec(), &v);
+                        let mut v_tostring: Vec<String> = Vec::new();
+                        for i in 0..v.len() {
+                            v_tostring.push(v[i].to_string().clone());
+                        }
+                        Self::delete_expressions(images.to_vec(), v_tostring.clone());
                         Self::save(images.to_vec());
+                    }
+                    3 => {
+                        return;
                     }
                     _ => {
                         println!("break");
@@ -478,22 +524,27 @@ pub mod image {
                 }
             }
         }
+        //afficher les informations des images
         pub fn print_all(images: &Vec<&MetadataImage>) {
+            println!("********************* les images selectionnées **********************");
             for i in 0..images.len() {
-                print!("{:}", i);
+                print!("Photo {:} :", i);
                 images[i].print_image();
             }
         }
-        pub fn delete_expressions(images: Vec<&MetadataImage>, expressions: &[&str]) {
+        //supression des expressions dans les images
+        pub fn delete_expressions(images: Vec<&MetadataImage>, expressions: Vec<String>) {
             for i in 0..images.len() {
-                images[i].delete_expressions(expressions);
+                images[i].delete_expressions(&expressions);
             }
         }
-        pub fn add_expressions(images: Vec<&MetadataImage>, expressions: &[&str]) {
+        //ajouter des expressions dans les images
+        pub fn add_expressions(images: Vec<&MetadataImage>, expressions: Vec<String>) {
             for i in 0..images.len() {
-                images[i].add_expressions(expressions);
+                images[i].add_expressions(&expressions);
             }
         }
+        //sauvgarder les modéficications portées sur les images après la selection (ajoute ou supression des tags)
         pub fn save(images: Vec<&MetadataImage>) {
             for i in 0..images.len() {
                 images[i].save();
