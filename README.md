@@ -10,6 +10,7 @@ L'application propose à l'utilisateur de séléctionner un ensemble de photos s
 * Le nom de l'appareil photo ou la camera
 * La résolution de la photo
 * tags qui sont des expressions ajoutées par l'utilisateur.
+
 Après que l'utilisateur choisi le mode de sélection, l'application demande de saisir les informations nécessaires pour chaque mode. si l'utilisateur choisi :
 * La sélection par le nom : il faudra saisir un nom ou une partie d'un nom pour sélectionner l'ensemble des photos qui ont le même nom ou qui contient le même mots.
 * La sélection par date : il faudra saisir une date, en respectant le format 0000:00:00, pour séléctionner les photos qui ont été prit dans le même jour.
@@ -33,11 +34,11 @@ imagemanager
     │   test.rs
 └─── Cargo.toml
 ```
-* images: est un répértoire qui contient les photos à gérer.
-* src/main.rs: contient la fonction principale main.
-* src/lib.rs : le code source de l'application (structs, les méthodes...)
-* tests/test.rs: les tests unitaire de l'application
-* cargo.toml : décrit le projet et il contient les dépendances utilisées.
+* **images** : est un répértoire qui contient les photos à gérer.
+* **src/main.rs** : contient la fonction principale main.
+* **src/lib.rs** : le code source de l'application (structs, les méthodes...)
+* **tests/test.rs** : les tests unitaire de l'application
+* **cargo.toml** : décrit le projet et il contient les dépendances utilisées.
 ## Dépendences 
 le projet utilise la bibliothèque externe rexiv2 (version 0.9.0). Cette dépendance est disponible sur crates.io.
 
