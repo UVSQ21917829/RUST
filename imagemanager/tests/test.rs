@@ -5,7 +5,7 @@ extern crate imagemanager;
 mod tests {  
     #[test]
     fn test_new() {
-        let path = "info.JPG";
+        let path = "images/info.JPG";
         let meta = imagemanager::image::MetadataImage::new(&path)unwrap();
         
     }

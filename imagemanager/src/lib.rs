@@ -30,11 +30,10 @@ pub mod image {
     //MetadataImage struct
     #[derive(Debug)]
     pub struct MetadataImage {
-        
         image: rexiv2::Metadata,
         name: String,
     }
-    //struct ImagesToManage contient la liste des images et elle permet de les selectionnées et les gérer 
+    //struct ImagesToManage contient la liste des images et elle permet de les selectionnées et les gérer
     #[derive(Debug)]
     pub struct ImagesToManage {
         //list of images
