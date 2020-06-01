@@ -35,4 +35,4 @@ Tout d'abord l'application propose à l'utilisateur de choisir un mode de sélé
  * La sélection par tags:Quand l'utilisateur choisit le mode séléction par tags l'application lui propose d'entrer un tag pour séléctioner les photos qui ont le meme tag
 
 
-![figure](ajout_comments.png)
+![figure](ajout_tags.png)
