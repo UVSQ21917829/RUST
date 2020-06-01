@@ -57,6 +57,6 @@ L’ensemble du cahier des charges que nous nous étions fixé semble être resp
 aimé ajouter plus de fonctionnalités notamment la sélection par type(JPG,PNG...) et sélection par la supportation des défférents tags (Exef, Xmp, Iptc). Ainsi que permetttre l'utilisateur de modifier certaines méta-données.
 
 
-Pour savoir plus sur la conception et les sénarios du projet, veuillez voir le documenent **conception_sebario.md**
+Pour savoir plus sur la conception et les sénarios du projet, veuillez voir le documenent **conception_senario.md**
 
 
