@@ -43,4 +43,4 @@ Tout d'abord l'application propose à l'utilisateur de choisir un mode de sélé
 ![figure](ajout_tags.png)
 * Supprimer tags : Durant chaque mode de séléction l'application propose à l'utilisateur de supprimer un ou plusieurs tags
 
-![figure](ajout_tags.png)
+![figure](supprimer_tags.png)
