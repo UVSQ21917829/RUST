@@ -10,7 +10,7 @@ fn main() {
                 1: Par nom
                 2: Par date
                 3: Par localisation gps
-                4: Par appariel photos
+                4: Par appareil photos
                 5: Par résolution
                 6: Par tags
                 7: quitter "
@@ -86,7 +86,7 @@ fn main() {
                     imagemanager::image::ImagesToManage::after_select(&images);
                 }
                 4 => {
-                    println!("Veuillez entrer le nom d appariel");
+                    println!("Veuillez entrer le nom d appareil");
                     let mut app = String::new();
                     io::stdin()
                         .read_line(&mut app)
@@ -127,6 +127,7 @@ fn main() {
                 }
                 7 => {
                     println!("Vous avez quité l'application ");
+                    break;
                 }
                 _ => {
                     println!("Entrer un nombre valide 1,2,3,3,4,5,6 ou 7 ");
