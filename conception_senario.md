@@ -36,3 +36,11 @@ Tout d'abord l'application propose à l'utilisateur de choisir un mode de sélé
 
 
 ![figure](validation_suppression.png)
+* Ajouter tags : Durant chaque mode de séléction l'application propose à l'utilisateur d'ajouter un ou plusieurs tags
+
+![figure](ajout_comments.png)
+
+![figure](ajout_tags.png)
+* Supprimer tags : Durant chaque mode de séléction l'application propose à l'utilisateur de supprimer un ou plusieurs tags
+
+![figure](ajout_tags.png)
