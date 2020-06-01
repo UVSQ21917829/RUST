@@ -47,6 +47,16 @@ Pour compiler et lancer l'exécutable le projet, tout d'abord, il faudra se dép
 ```
 cargo run
 ```
+Les testes unitaires de l'application se lance avec la commande: 
+
+```
+cargo test
+```
 # Amélioration
 L’ensemble du cahier des charges que nous nous étions fixé semble être respecté. Nous aurions
 aimé ajouter plus de fonctionnalités notamment la sélection par type(JPG,PNG...) et sélection par la supportation des défférents tags (Exef, Xmp, Iptc). Ainsi que permetttre l'utilisateur de modifier certaines méta-données.
+
+
+Pour savoir plus sur la conception et les sénarios du projet, veuillez voir le documenent **conception_sebario.md**
+
+
