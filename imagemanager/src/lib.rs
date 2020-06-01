@@ -304,12 +304,8 @@ pub mod image {
 
             let mut deleted = false;
             for i in 0..expressions.len() {
-                exp.remove(
-                    exp.iter()
-                        .position(|x| *x == expressions[i].trim())
-                        .expect("cette tag n'exsiste pas"),
-                );
-                if let Some(pos) = exp.iter().position(|x| *x == expressions[i]) {
+                
+                if let Some(pos) = exp.iter().position(|x| *x == expressions[i].trim()) {
                     deleted = true;
                     exp.remove(pos);
                 }
