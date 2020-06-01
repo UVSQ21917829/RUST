@@ -16,7 +16,7 @@ Tout d'abord l'application propose à l'utilisateur de choisir un mode de sélé
 
 
 ![figure](mode_selection.png)
-* La sélection par le nom : Quand l'utilisateur choisit le mode séléction par nom l'application lui propose d'entrer un nom pour séléctioner les photos pour sélectionner l'ensemble des photos qui ont le même nom ou qui contient une partie du nom entrer
+* La sélection par le nom : Quand l'utilisateur choisit le mode séléction par nom l'application lui propose d'entrer un nom pour séléctioner  l'ensemble des photos qui ont le même nom ou qui contient une partie du nom entrer
 
 ![figure](mode_selection_par_nom.png)
 * La sélection par  date : Quand l'utilisateur choisit le mode séléction par date l'application lui propose d'entrer un date selon une format précise pour séléctioner les photos qui ont la meme date
