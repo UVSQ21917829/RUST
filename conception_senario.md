@@ -13,6 +13,8 @@ Cette bibliothèque fournit un wrapper Rust de la bibliothèque gexiv2, qui est 
 # Sénario
 Dans le sénario on va montrer le résultat de chaque fonctionnalités de l'application .
 Tout d'abord l'application propose à l'utilisateur de choisir un mode de séléction 
+
+
 ![figure](mode_selection.png)
 * La sélection par le nom : Quand l'utilisateur choisit le mode séléction par nom l'application lui propose d'entrer un nom pour séléctioner les photos qui ont le meme pseudo
 * La sélection par  date : Quand l'utilisateur choisit le mode séléction par date l'application lui propose d'entrer un date selon une format précise pour séléctioner les photos qui ont la meme date
