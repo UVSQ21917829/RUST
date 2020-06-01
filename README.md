@@ -47,3 +47,6 @@ Pour compiler et lancer l'exécutable le projet, tout d'abord, il faudra se dép
 ```
 cargo run
 ```
+# Amélioration
+L’ensemble du cahier des charges que nous nous étions fixé semble être respecté. Nous aurions
+aimé ajouter plus de fonctionnalités notamment la sélection par type(JPG,PNG...) et sélection par la supportation des défférents tags (Exef, Xmp, Iptc). Ainsi que permetttre l'utilisateur de modifier certaines méta-données.
