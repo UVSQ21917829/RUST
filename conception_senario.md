@@ -17,8 +17,22 @@ Tout d'abord l'application propose à l'utilisateur de choisir un mode de sélé
 
 ![figure](mode_selection.png)
 * La sélection par le nom : Quand l'utilisateur choisit le mode séléction par nom l'application lui propose d'entrer un nom pour séléctioner les photos qui ont le meme pseudo
+
+![figure](mode_selection_par_nom.png)
 * La sélection par  date : Quand l'utilisateur choisit le mode séléction par date l'application lui propose d'entrer un date selon une format précise pour séléctioner les photos qui ont la meme date
+
+![figure](mode_selection_2.png)
+![figure](mode_selection_par_date.png)
 * La sélection par  localisation  :Quand l'utilisateur choisit le mode séléction par localisation l'application lui propose d'entrer les paramètres suivant:longitude, latitude et altitudee pour séléctioner les photos qui ont la meme localisation
+
+![figure](mode_selection_gps.png)
 * La sélection par nom de l'appareil photo ou la camera  :Quand l'utilisateur choisit le mode séléction par appareil l'application lui propose d'entrer son nom afin d'afficher les photos prisent par la meme appareil
+
+![figure](mode_selection_appareil.png)
 * La sélection par résolution:Quand l'utilisateur choisit le mode séléction par l'application lui propose d'entrer la résolution x et la résolution y pour afficher les photos qui ont la meme résolution
+
+![figure](mode_selection_resolution.png)
  * La sélection par tags:Quand l'utilisateur choisit le mode séléction par tags l'application lui propose d'entrer un tag pour séléctioner les photos qui ont le meme tag
+
+
+![figure](ajout_tags.png)
