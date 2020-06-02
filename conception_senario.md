@@ -8,7 +8,13 @@ rexiv2="0.9.0"
 ```
 Cette bibliothèque fournit un wrapper Rust de la bibliothèque gexiv2, qui est elle-même un wrapper basé sur GObject de la bibliothèque Exiv2, qui fournit un accès en lecture et en écriture aux métadonnées Exif, XMP et IPTC pour les fichiers multimédias dans différents formats.
 
-Étant donné que la bibliothèque rexiv2 est lié à gexiv2 et transitivement à Exiv2, rexiv2 dépend évidemment d'eux (et de leurs dépendances). L'installation de ces bibliothèques sur le système est une condition préalable à l'utilisation de rexiv2 ou de tout logiciel construit sur celle-ci.
+Étant donné que la bibliothèque rexiv2 est lié à gexiv2 et transitivement à Exiv2, rexiv2 dépend évidemment d'eux (et de leurs dépendances). L'installation de ces bibliothèques sur le système est une condition préalable à l'utilisation de rexiv2 ou de tout logiciel construit sur celle-ci (comme le cas de notre projet).
+
+## Réferences des APIs
+
+[**gexiv2**](https://wiki.gnome.org/Projects/gexiv2)
+[**exiv2**](https://www.exiv2.org/)
+[**rexiv2**](https://github.com/felixc/rexiv2/blob/master/SETUP.md)
 
 # Sénario
 Dans le sénario on va montrer le résultat de chaque fonctionnalités de l'application .
