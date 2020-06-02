@@ -56,23 +56,22 @@ fn main() {
                     io::stdin()
                         .read_line(&mut long)
                         .expect("Echec de lire la ligne");
-                    let long = 0i32;
+                    let mut lon = 0f64;
                        
                         match long.trim().parse::<f64>() {
                           Ok(n) => {
-                            long=n;
+                            lon=n;
                           }
                           Err(e) => println!("La longitude doit être un nombre");
                         }
                     println!("Veuillez entrer la valeur latitude");
-                    let mut lat = String::new();
+                    let mut lati = String::new();
                     io::stdin()
-                        .read_line(&mut lat)
+                        .read_line(&mut lati)
                         .expect("Echec de lire la ligne");
-                    let lat = 0i32;
-                        let lat = lat
+                    let mut lat = 0f64;
                        
-                        match lat.trim().parse::<f64>() {
+                        match lati.trim().parse::<f64>() {
                           Ok(n) => {
                             lat=n;
 
@@ -80,18 +79,18 @@ fn main() {
                           Err(e) => println!("La longitude doit être un nombre");
                         }
                     println!("Veuillez entrer la valeur altitude");
-                    let mut alt = String::new();
+                    let mut alti = String::new();
                     io::stdin()
-                        .read_line(&mut alt)
+                        .read_line(&mut alti)
                         .expect("Echec de lire la ligne");
-                    let alt = 0i32;
-                        match alt.trim().parse::<f64>() {
+                    let mut alt = 0f64;
+                        match alti.trim().parse::<f64>() {
                           Ok(n) => {
                             alt=n;
                           }
                           Err(e) => println!("La longitude doit être un nombre");
                         }
-                    images = gestionnaire.select_by_gps(long, lat, alt);
+                    images = gestionnaire.select_by_gps(lon, lat, alt);
                     imagemanager::image::ImagesToManage::print_all(&images);
                     imagemanager::image::ImagesToManage::after_select(&images);
                 }
