@@ -62,7 +62,7 @@ fn main() {
                           Ok(n) => {
                             lon=n;
                           }
-                          Err(e) => println!("La longitude doit être un nombre");
+                          Err(e) => println!("La longitude doit être un nombre")
                         }
                     println!("Veuillez entrer la valeur latitude");
                     let mut lati = String::new();
@@ -76,7 +76,7 @@ fn main() {
                             lat=n;
 
                           }
-                          Err(e) => println!("La longitude doit être un nombre");
+                          Err(e) => println!("La longitude doit être un nombre")
                         }
                     println!("Veuillez entrer la valeur altitude");
                     let mut alti = String::new();
@@ -88,7 +88,7 @@ fn main() {
                           Ok(n) => {
                             alt=n;
                           }
-                          Err(e) => println!("La longitude doit être un nombre");
+                          Err(e) => println!("La longitude doit être un nombre")
                         }
                     images = gestionnaire.select_by_gps(lon, lat, alt);
                     imagemanager::image::ImagesToManage::print_all(&images);
