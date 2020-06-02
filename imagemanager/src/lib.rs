@@ -373,8 +373,8 @@ pub mod image {
     }
     impl ImagesToManage {
         //l'initialisation de ImangesManage
-        pub fn new() -> Result<ImagesToManage, ()> {
-            let paths = std::fs::read_dir("images").unwrap();
+        pub fn new(path: &str) -> Result<ImagesToManage, ()> {
+            let paths = std::fs::read_dir(path.trim()).unwrap();
             let mut list: Vec<MetadataImage> = Vec::new();
             for path in paths {
                 let pathimg = path.unwrap().path().display().to_string();
