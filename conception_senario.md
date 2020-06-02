@@ -13,18 +13,26 @@ Cette bibliothèque fournit un wrapper Rust de la bibliothèque gexiv2, qui est 
 ## Réferences des APIs
 
 [**gexiv2**](https://wiki.gnome.org/Projects/gexiv2)
+
 [**exiv2**](https://www.exiv2.org/)
+
 [**rexiv2**](https://github.com/felixc/rexiv2/blob/master/SETUP.md)
 
 # Sénario
 Dans le sénario on va montrer le résultat de chaque fonctionnalités de l'application .
-Tout d'abord l'application propose à l'utilisateur de choisir un mode de séléction 
+Apères le lancement de l'application, l'utilisateur doit choisir le répertoire des photos en entrant son chemin à fin de charger les photos à gérer.
+
+![figure](choisir_rep.png)
+
+Après avoir saisir un chemin valide, l'application propose à l'utilisateur de choisir un mode de séléction 
 
 
 ![figure](mode_selection.png)
+
 * La sélection par le nom : Quand l'utilisateur choisit le mode séléction par nom l'application lui propose d'entrer un nom pour séléctioner  l'ensemble des photos qui ont le même nom ou qui contient une partie du nom entrer
 
 ![figure](mode_selection_par_nom.png)
+
 * La sélection par  date : Quand l'utilisateur choisit le mode séléction par date l'application lui propose d'entrer un date selon une format précise pour séléctioner les photos qui ont la meme date
 
 ![figure](mode_selection_2.png)
@@ -35,6 +43,7 @@ Tout d'abord l'application propose à l'utilisateur de choisir un mode de sélé
 * La sélection par nom de l'appareil photo ou la camera  :Quand l'utilisateur choisit le mode séléction par appareil l'application lui propose d'entrer son nom afin d'afficher les photos prisent par la meme appareil
 
 ![figure](mode_selection_appareil.png)
+
 * La sélection par résolution:Quand l'utilisateur choisit le mode séléction par l'application lui propose d'entrer la résolution x et la résolution y pour afficher les photos qui ont la meme résolution
 
 ![figure](mode_selection_resolution.png)
