@@ -3,7 +3,29 @@ extern crate imagemanager;
 extern crate rexiv2 as rexiv2;
 
 fn main() {
-    if let Ok(gestionnaire) = imagemanager::image::ImagesToManage::new() {
+    let mut chemin = String::new();
+    loop {
+            println!("Veuillez entrer le chemin du repertoire de vos photos:");
+            chemin = String::new();
+            io::stdin()
+                .read_line(&mut chemin);
+                let chemin = chemin.trim();
+                
+                if std::path::Path::new(&chemin).exists() 
+                {
+                    let md = std::fs::metadata(&chemin).unwrap();  
+                    if md.is_dir(){
+                     break;
+                    }else{
+                        println!("Ce chemin n'est pas un repertoitre");
+                    }
+                    
+                }else{
+                    println!("Chemin invalide");
+                }
+                
+        }
+    if let Ok(gestionnaire) = imagemanager::image::ImagesToManage::new(&chemin) {
         loop {
             println!(
                 "Veuillez choisir le mode de selection souhaité:
